@@ -21,4 +21,6 @@ object SparkHiveHDFS extends  App {
   spark.sql("show tables").show()
    spark.sql("select * from pokes").show()
 
+  spark.sql("select * from movies").show()
+
 }

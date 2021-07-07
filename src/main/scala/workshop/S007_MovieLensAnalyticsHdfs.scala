@@ -1,13 +1,17 @@
 package workshop
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{DoubleType, IntegerType, LongType, StringType, StructField, StructType}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
 
-import  org.apache.spark.sql.functions._
+object S007_MovieLensAnalyticsHdfs extends  App {
+    //val MoviesPath = "/home/krish/ml-latest-small/movies.csv"
+    // val RatingsPath = "/home/krish/ml-latest-small/ratings.csv"
 
-object S007_MovieLensAnalytics extends  App {
-    val MoviesPath = "/home/krish/ml-latest-small/movies.csv"
-    val RatingsPath = "/home/krish/ml-latest-small/ratings.csv"
+  val MoviesPath = "hdfs://192.168.1.103:8020/user/movieset/movies.csv"
+  val RatingsPath = "hdfs://192.168.1.103:8020/user/movieset/ratings.csv"
+
+
 
     val spark: SparkSession  = SparkSession
       .builder()
@@ -42,7 +46,6 @@ object S007_MovieLensAnalytics extends  App {
     .option("delimitter", ",")
     .schema(MovieSchema) // use the Schema
     .load(MoviesPath)
-
 
     // we no need to use inferSchema
     val ratingDf = spark.read
@@ -123,5 +126,7 @@ object S007_MovieLensAnalytics extends  App {
   mostPopularMoviesList.show()
 
   ratingDf.sort("userId", "rating", "movieId").select("userId", "rating", "movieId").show()
+
+
 
 }
