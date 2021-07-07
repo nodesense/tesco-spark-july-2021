@@ -111,5 +111,7 @@ object S008_MovieLensAnalyticsSQL extends  App {
        INNER JOIN movies on movies.movieId == pm.movieId
     """)
 
-  spark.table("most_popular_movies").show()
+  // table to expose table as data frame
+  val df5 = spark.table("most_popular_movies")
+  df5.show()
 }
