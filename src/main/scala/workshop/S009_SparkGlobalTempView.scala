@@ -77,4 +77,6 @@ object S009_SparkGlobalTempView extends  App {
   // WORKS
   // spark2 can access global_temp.movies as it is global temp table
   spark2.sql("select * from global_temp.movies").show(5)
+
+  println("spark2.sparkContext == spark.sparkContext", spark2.sparkContext == spark.sparkContext)
 }

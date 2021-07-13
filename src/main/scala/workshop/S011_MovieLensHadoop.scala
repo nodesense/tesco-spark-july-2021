@@ -7,9 +7,15 @@ import org.apache.spark.sql.types._
 object S011_MovieLensHadoop extends  App {
   // Create a folder  movieset under users in HDFS usign hue UI
   // Upload movielens data csv files into movieset folder using Hue
+//
+//  val MoviesPath = "hdfs://135.181.203.55:8020/user/movieset/movies.csv"
+//  val RatingsPath = "hdfs://135.181.203.55:8020/user/movieset/ratings.csv"
+//
+//  val MoviesPath = "hdfs://192.168.1.103:8020/user/movieset/movies.csv"
+//  val RatingsPath = "hdfs://192.168.1.103:8020/user/movieset/ratings.csv"
 
-  val MoviesPath = "hdfs://135.181.203.55:8020/user/movieset/movies.csv"
-  val RatingsPath = "hdfs://135.181.203.55:8020/user/movieset/ratings.csv"
+  val MoviesPath = "hdfs://bigdata.training.sh:8020/user/movieset/movies.csv"
+  val RatingsPath = "hdfs://bigdata.training.sh:8020/user/movieset/ratings.csv"
 
   val spark: SparkSession  = SparkSession
     .builder()
