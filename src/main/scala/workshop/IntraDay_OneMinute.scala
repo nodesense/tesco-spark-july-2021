@@ -27,7 +27,7 @@ object IntraDay_OneMinute extends  App {
   .config("spark.shuffle.service.enabled", "true") // must be true for spark.dynamicAllocation.enabled = true
 
     .config("spark.dynamicAllocation.initialExecutors", "1") //
-  .config("spark.dynamicAllocation.minExecutors", "1") //
+  .config("spark.dynamicAllocation.minExecutors", "2") //
   .config("spark.dynamicAllocation.maxExecutors", "4") //
   .config("spark.cores.max", "4")
   //  spark.dynamicAllocation.initialExecutors

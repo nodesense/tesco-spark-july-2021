@@ -97,6 +97,8 @@ object S008_MovieLensAnalyticsSQL extends  App {
     ORDER BY avg_rating DESC
     """)
 
+  spark.sql("CACHE TABLE popular_movies") // equal to df.cache()
+
 
   spark.sql("select * from popular_movies").show(100)
 
@@ -104,12 +106,16 @@ object S008_MovieLensAnalyticsSQL extends  App {
   val popularMoviesDf = spark.table("popular_movies")
   popularMoviesDf.show(2)
 
-  spark.sql(
+  val df3 = spark.sql(
     """
        CREATE TEMP VIEW most_popular_movies AS
        SELECT pm.movieId, title, avg_rating, total_rating  from popular_movies pm
        INNER JOIN movies on movies.movieId == pm.movieId
     """)
+
+  // write to hdfs
+  // sink to jdbc
+  // write to kafka
 
   // table to expose table as data frame
   val df5 = spark.table("most_popular_movies")

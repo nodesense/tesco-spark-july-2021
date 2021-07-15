@@ -61,7 +61,9 @@ object S010_SparkUDF extends  App {
   // you need custom transformation/handling a column data, how to do that?
   // UDF - User Defined Functions, add custom functions that can be used in sql
 
+  // import a third party library and work with that
   val square = (s: Long) => s * s
+
 
   // register spark UDF on session
   // UDF is for local session

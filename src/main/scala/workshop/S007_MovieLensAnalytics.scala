@@ -11,9 +11,11 @@ object S007_MovieLensAnalytics extends  App {
 
     val spark: SparkSession  = SparkSession
       .builder()
-      .master("local") // spark run inside hello world app
-      //.master("spark://192.168.1.110:7077") // now driver runs the tasks on cluster
+      //.master("local") // spark run inside hello world app
+      .master("spark://192.168.1.103:7077") // now driver runs the tasks on cluster
       .appName("MovieLensAnalytics")
+      // .config("spark.cores.max", "48") // MAX CORE Across Cluster
+      .config("spark.executor.memory", "4g")
       .getOrCreate()
 
   import spark.implicits._
@@ -116,7 +118,15 @@ object S007_MovieLensAnalytics extends  App {
   popularMovies.printSchema()
   popularMovies.show(200)
 
-  val mostPopularMoviesList = popularMovies.join(movieDf, popularMovies("movieId") === movieDf("movieId"))
+
+  // if your dataframe has 15 columns, you may use only 2 columns for joins
+  val slimMovieDf = movieDf.select("movieId", "title")
+
+  // the data is readily avaialbel in all the workers where executors running
+  // all small tables, master/dimension tables can be broadcasted
+  val broadcatedMovieDf = broadcast(slimMovieDf)
+
+  val mostPopularMoviesList = popularMovies.join(broadcatedMovieDf, popularMovies("movieId") === movieDf("movieId"))
     .select(popularMovies("movieId"), $"title", $"avg_rating", $"total_rating" )
 
   mostPopularMoviesList.printSchema()
@@ -124,4 +134,6 @@ object S007_MovieLensAnalytics extends  App {
 
   ratingDf.sort("userId", "rating", "movieId").select("userId", "rating", "movieId").show()
 
+  println("press enter to exit")
+  scala.io.StdIn.readLine()
 }

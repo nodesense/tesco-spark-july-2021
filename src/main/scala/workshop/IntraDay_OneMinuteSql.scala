@@ -7,7 +7,7 @@ import org.apache.spark.sql.expressions.Window
 
 object IntraDay_OneMinuteSql extends  App {
   //val DataPath = "/home/krish/data/optimized-intraday/parquet"
-  val DataPath = "/home/krish/data/optimized-intraday/parquet/Year=2021"
+  val DataPath = "/home/krish/data/optimized-intraday/parquet"
 
 
   val spark: SparkSession  = SparkSession
@@ -30,6 +30,8 @@ object IntraDay_OneMinuteSql extends  App {
   intraDayMinDfRaw.printSchema();
 
   intraDayMinDfRaw.createOrReplaceTempView("intraday")
+
+
   /*
 
   SELECT pat_id,
@@ -65,7 +67,7 @@ object IntraDay_OneMinuteSql extends  App {
 //      |        FROM intraday
 //      |""".stripMargin).show(5)
 
-  intraDayMinDfRaw.cache()
+ // intraDayMinDfRaw.cache()
 //
 //  println("Intraday diff");
 //  intraDayMinDfRaw.withColumn("DailyPoints", $"Close" - $"Open")
